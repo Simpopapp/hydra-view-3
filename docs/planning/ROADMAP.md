@@ -9,10 +9,10 @@
 - Gates: vitest (23 + novo teste de cópia), lint 0 erros, build OK, Playwright 6 rotas sem erro de console, reduced-motion verificado.
 
 ## P2-1 — Home
-- [ ] Hero com CTA único + secundário; badge de métricas como pill
-- [ ] "Como funciona" como pipeline numerado com conectora; "4 passos" como timeline
-- [ ] Grid de famílias com cards 100% clicáveis; split hero final; reveal com stagger
-- Gates: seção 9 do PRD + screenshots desktop/mobile sem overflow horizontal.
+- [x] Hero com CTA único + secundário; badge de métricas como pill
+- [x] "Como funciona" como pipeline numerado com conectora; "4 passos" como timeline
+- [x] Grid de famílias com cards 100% clicáveis; split hero final; reveal com stagger
+- Gates: seção 9 do PRD (vitest/lint/build) + screenshots desktop/mobile sem overflow horizontal. ✓ (25/25 testes, lint 0 erros, build OK, Playwright 1280×1800 + 375×812 sem overflow e sem erro de console da app; avaliação do monitor: `docs/planning/reports/stage-p2-1-eval.md` — concluída)
 
 ## P2-2 — Catálogo `/tools`
 - [ ] Busca com `/` para focar, `Escape`, botão limpar, contagem com `aria-live`, destaque `<mark>`
