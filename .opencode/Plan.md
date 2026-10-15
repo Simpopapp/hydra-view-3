@@ -31,7 +31,7 @@ O trabalho agentico de remix é guiado por 3 arquivos (N = 1 neste projeto; com 
 - Ao concluir tudo, reporte (seção 20) e crie a checagem de 5 min / 10 tentativas por novos arquivos ou fases.
 - Esta seção prevalece sobre a regra 3 do `Plan.md` em caso de conflito.
 - Nunca perguntar ao usuário o que fazer durante um remix sem ter concluido ao menos 1 fase completa do roadmap
-- sempre conferir se as diretrizes padrão estão salvas em /.opencode/diretrizes-padrão-completo.md e resumidas em /.opencode/diretrizes-padrão.md (reescreva-as se tiverem sido perdidas durante o remix)
+- sempre conferir se as diretrizes padrão da plataforma estão salvas em /.opencode/diretriz-padrão-completo.md (versão original injetada no agente) e resumidas em /.opencode/diretriz-padrão.md (reescreva-as se tiverem sido perdidas durante o remix)
 
 ### Quando executar
 - Sempre que um remix for ativado através do comando "I've successfully remixed this project. What would be a good next step?"
