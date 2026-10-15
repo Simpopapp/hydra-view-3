@@ -2,7 +2,7 @@
 
 > Documento de referência: compilação resumida das diretrizes padrão que a plataforma
 > injeta no agente principal a cada mensagem. Serve para manter no contexto do agente sobre as regras da plataforma.
-> A versão original deve estar em /.opencode/diretrizes-padrão-completa.md
+> A versão original deve estar em /.opencode/diretriz-padrão-completo.md
 
 ---
 
