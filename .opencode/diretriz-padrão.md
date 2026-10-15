@@ -1,10 +1,8 @@
 # Diretrizes Padrão da Plataforma (Lovable)
 
-> Documento de referência: compilação das diretrizes padrão que a plataforma
-> injeta no agente principal a cada mensagem. Serve para manter no contexto do agente e
-> avaliarmos o melhor formato de estruturação do `.opencode/Plan.md` e resolver conflitos de
-> precedência entre as regras do projeto e as regras da plataforma.
-> A versão original deve estar em /.opencode/diretriz-padrão-completa.md
+> Documento de referência: compilação resumida das diretrizes padrão que a plataforma
+> injeta no agente principal a cada mensagem. Serve para manter no contexto do agente sobre as regras da plataforma.
+> A versão original deve estar em /.opencode/diretrizes-padrão-completa.md
 
 ---
 
