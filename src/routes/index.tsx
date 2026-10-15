@@ -1,11 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, BookOpen, Compass, Cpu, Layers, Plug, Sparkles, Zap } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ReactNode } from "react";
+import { ArrowRight, ArrowUpRight, BookOpen, Terminal, TriangleAlert, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { CategoryIcon } from "@/components/category-icon";
+import { useRevealOnScroll, revealClasses } from "@/hooks/use-reveal-on-scroll";
 import { CATEGORY_COUNTS } from "@/data/tools";
 import { getCategoryMeta } from "@/data/categories-meta";
 import { WORKFLOWS } from "@/data/workflows";
@@ -40,19 +40,16 @@ export const Route = createFileRoute("/")({
 
 const ARCHITECTURE = [
   {
-    icon: <Layers className="size-5 text-primary" />,
     title: "Plugin Ghidra",
     description:
       "Uma extensão instalada no Ghidra sobe um servidor HTTP (McpHttpServer) com as 209 ferramentas — na GUI ou no modo headless, sem GUI.",
   },
   {
-    icon: <Plug className="size-5 text-primary" />,
     title: "MCP Bridge (Python)",
     description:
       "O bridge descobre instâncias do Ghidra (Unix socket ou TCP), registra as ferramentas dinamicamente a partir do schema e as expõe via MCP (stdio ou HTTP).",
   },
   {
-    icon: <Cpu className="size-5 text-primary" />,
     title: "Cliente de IA",
     description:
       "Claude, Cursor ou qualquer cliente MCP chama as ferramentas: decompilar, renomear, tipar, documentar — dirigindo o Ghidra em linguagem natural.",
@@ -83,6 +80,28 @@ const QUICK_START = [
   },
 ];
 
+/** Entrada de conteúdo ao rolar com atraso opcional (stagger). */
+function Reveal({
+  children,
+  delay = 0,
+  className,
+}: {
+  children: ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const { ref, revealed } = useRevealOnScroll<HTMLDivElement>();
+  return (
+    <div
+      ref={ref}
+      style={delay ? { transitionDelay: `${delay}ms` } : undefined}
+      className={revealClasses(revealed, className)}
+    >
+      {children}
+    </div>
+  );
+}
+
 function HomePage() {
   const topCategories = CATEGORY_COUNTS.slice(0, 8);
 
@@ -91,173 +110,237 @@ function HomePage() {
       <SiteHeader />
       <main id="main" className="flex-1">
         {/* Hero */}
-        <section className="mx-auto max-w-6xl px-4 pb-12 pt-16 text-center sm:px-6">
-          <div className="mb-4 inline-flex items-center gap-1.5 rounded-full border border-border/80 bg-card/60 px-3 py-1 text-xs font-medium text-muted-foreground">
-            <Sparkles className="size-3.5 text-primary" />
-            <span>209 ferramentas · 18 categorias · 8 fluxos guiados</span>
-          </div>
-          <h1 className="mx-auto max-w-3xl font-serif text-4xl font-bold tracking-tight sm:text-5xl">
-            Engenharia reversa do Ghidra, dirigida por{" "}
-            <span className="text-primary">seu assistente de IA</span>
-          </h1>
-          <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            O Ghidra MCP expõe as capacidades do Ghidra como ferramentas MCP: decompilar, renomear,
-            tipar, documentar e emular — direto do seu cliente de IA. Este guia navega tudo sem
-            abrir o README.
-          </p>
-          <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
-            <Button asChild size="lg" className="gap-2">
-              <Link to="/tools">
-                Explorar ferramentas <ArrowRight className="size-4" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="gap-2">
-              <Link to="/setup">
-                <Zap className="size-4" /> Começar do zero
-              </Link>
-            </Button>
-          </div>
-        </section>
-
-        {/* Arquitetura */}
-        <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-          <h2 className="mb-1 font-serif text-2xl font-semibold">Como funciona</h2>
-          <p className="mb-6 text-sm text-muted-foreground">
-            Três peças: o plugin dentro do Ghidra, o bridge Python no meio e o cliente de IA na
-            ponta.
-          </p>
-          <div className="grid gap-4 md:grid-cols-3">
-            {ARCHITECTURE.map((item) => (
-              <Card
-                key={item.title}
-                className="border-border/60 bg-card/60 transition-colors hover:border-primary/30"
-              >
-                <CardHeader className="p-5 pb-2">
-                  <div className="flex items-center gap-3">
-                    <div className="flex size-9 items-center justify-center rounded-md border border-border/40 bg-secondary/80">
-                      {item.icon}
-                    </div>
-                    <CardTitle className="text-base font-semibold">{item.title}</CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="p-5 pt-1 text-xs leading-relaxed text-muted-foreground sm:text-sm">
-                  {item.description}
-                </CardContent>
-              </Card>
-            ))}
+        <section className="relative overflow-hidden">
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-64 max-w-4xl rounded-full bg-primary/10 blur-3xl"
+          />
+          <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-16 text-center sm:px-6 sm:pt-24">
+            <Reveal>
+              <p className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface-raised px-4 py-1.5 font-mono text-xs text-muted-foreground">
+                <span className="size-1.5 rounded-full bg-primary" />
+                <span>209 ferramentas</span>
+                <span aria-hidden="true" className="text-border-strong">
+                  ·
+                </span>
+                <span>18 categorias</span>
+                <span aria-hidden="true" className="text-border-strong">
+                  ·
+                </span>
+                <span>8 fluxos guiados</span>
+              </p>
+            </Reveal>
+            <Reveal delay={60}>
+              <h1 className="mx-auto mt-6 max-w-3xl font-serif text-4xl font-semibold leading-tight tracking-tight sm:text-6xl">
+                Engenharia reversa do Ghidra, dirigida por{" "}
+                <span className="text-primary">seu assistente de IA</span>
+              </h1>
+            </Reveal>
+            <Reveal delay={120}>
+              <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+                O Ghidra MCP expõe as capacidades do Ghidra como ferramentas MCP: decompilar,
+                renomear, tipar, documentar e emular — direto do seu cliente de IA. Este guia
+                navega tudo sem abrir o README.
+              </p>
+            </Reveal>
+            <Reveal delay={180}>
+              <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+                <Button asChild size="lg" className="gap-2">
+                  <Link to="/tools">
+                    Explorar ferramentas <ArrowRight className="size-4" />
+                  </Link>
+                </Button>
+                <Button asChild size="lg" variant="outline" className="gap-2">
+                  <Link to="/setup">
+                    <Zap className="size-4" /> Começar do zero
+                  </Link>
+                </Button>
+              </div>
+            </Reveal>
           </div>
         </section>
 
-        {/* Quick start */}
-        <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-          <div className="rounded-xl border border-border/60 bg-card/40 p-6 sm:p-7">
-            <div className="mb-5 flex items-center gap-2 text-sm font-medium">
-              <Compass className="size-4 text-primary" />
-              <span>Primeiro uso em 4 passos</span>
+        {/* Como funciona — pipeline numerado com conectora */}
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <Reveal>
+            <div className="mb-8 max-w-2xl">
+              <h2 className="font-serif text-2xl font-semibold sm:text-3xl">Como funciona</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Três peças: o plugin dentro do Ghidra, o bridge Python no meio e o cliente de IA na
+                ponta.
+              </p>
             </div>
-            <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {QUICK_START.map((item) => (
-                <li key={item.step}>
+          </Reveal>
+          <ol className="relative grid gap-4 md:grid-cols-3 md:gap-5">
+            <span
+              aria-hidden="true"
+              className="absolute left-6 right-6 top-6 hidden h-px bg-border md:block"
+            />
+            {ARCHITECTURE.map((item, index) => (
+              <li key={item.title} className="relative">
+                <Reveal delay={index * 80}>
+                  <div className="h-full rounded-xl border border-border/60 bg-card/60 p-5 transition-colors hover:border-border-strong">
+                    <div className="flex items-center gap-3">
+                      <span className="relative z-10 flex size-12 shrink-0 items-center justify-center rounded-full border border-border/60 bg-background font-mono text-sm text-primary">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <h3 className="text-base font-semibold">{item.title}</h3>
+                    </div>
+                    <p className="mt-3 text-xs leading-relaxed text-muted-foreground sm:text-sm">
+                      {item.description}
+                    </p>
+                  </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* Primeiro uso — timeline vertical */}
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <Reveal>
+            <div className="mb-8 max-w-2xl">
+              <h2 className="font-serif text-2xl font-semibold sm:text-3xl">Primeiro uso</h2>
+              <p className="mt-2 text-sm text-muted-foreground">
+                Do zero às 209 ferramentas no seu cliente de IA, em 4 passos.
+              </p>
+            </div>
+          </Reveal>
+          <ol className="relative ml-2 max-w-2xl space-y-5 border-l border-border pl-7">
+            {QUICK_START.map((item, index) => (
+              <li key={item.step} className="relative">
+                <span
+                  aria-hidden="true"
+                  className="absolute -left-[35px] top-1 flex size-2.5 items-center justify-center rounded-full bg-primary"
+                />
+                <Reveal delay={index * 60}>
                   <Link
                     to="/setup"
                     hash={`passo-${item.step}`}
-                    className="group block rounded-lg border border-border/50 bg-background/50 p-4 transition-colors hover:border-primary/40"
+                    className="group block rounded-lg border border-transparent p-3 -m-3 transition-colors hover:border-border/60 hover:bg-card/50"
                   >
-                    <span className="font-mono text-xs text-primary">0{item.step}</span>
-                    <p className="mt-1 text-sm font-medium group-hover:text-primary">
-                      {item.title}
-                    </p>
-                    <p className="mt-1 text-xs leading-relaxed text-muted-foreground">
+                    <div className="flex items-baseline gap-3">
+                      <span className="font-mono text-xs text-primary">
+                        0{item.step}
+                      </span>
+                      <p className="text-sm font-medium group-hover:text-primary">
+                        {item.title}
+                      </p>
+                    </div>
+                    <p className="mt-1 pl-7 text-xs leading-relaxed text-muted-foreground">
                       {item.detail}
                     </p>
                   </Link>
-                </li>
-              ))}
-            </ol>
-          </div>
+                </Reveal>
+              </li>
+            ))}
+          </ol>
         </section>
 
-        {/* Categorias */}
-        <section className="mx-auto max-w-6xl px-4 pb-12 sm:px-6">
-          <div className="mb-6 flex items-end justify-between">
-            <div>
-              <h2 className="font-serif text-2xl font-semibold">Famílias de ferramentas</h2>
-              <p className="text-sm text-muted-foreground">
-                As categorias com mais ferramentas — o catálogo completo tem 18.
-              </p>
+        {/* Famílias de ferramentas — cards 100% clicáveis */}
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <Reveal>
+            <div className="mb-8 flex items-end justify-between gap-4">
+              <div className="max-w-2xl">
+                <h2 className="font-serif text-2xl font-semibold sm:text-3xl">
+                  Famílias de ferramentas
+                </h2>
+                <p className="mt-2 text-sm text-muted-foreground">
+                  As categorias com mais ferramentas — o catálogo completo tem 18.
+                </p>
+              </div>
+              <Link
+                to="/tools"
+                className="hidden shrink-0 items-center gap-1 text-sm text-primary hover:underline sm:inline-flex"
+              >
+                Ver todas <ArrowRight className="size-3.5" />
+              </Link>
             </div>
-            <Link
-              to="/tools"
-              className="hidden shrink-0 items-center gap-1 text-sm text-primary hover:underline sm:inline-flex"
-            >
-              Ver todas <ArrowRight className="size-3.5" />
-            </Link>
-          </div>
+          </Reveal>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            {topCategories.map(({ id, count }) => {
+            {topCategories.map(({ id, count }, index) => {
               const meta = getCategoryMeta(id);
               if (!meta) return null;
               return (
-                <Link
-                  key={id}
-                  to="/tools"
-                  search={{ categoria: id }}
-                  className="group rounded-lg border border-border/60 bg-card/50 p-4 transition-colors hover:border-primary/40"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-foreground">
-                      <CategoryIcon icon={meta.icon} className="size-4 text-primary" />
-                      <span className="text-sm font-medium">{meta.label}</span>
+                <Reveal key={id} delay={(index % 4) * 50}>
+                  <Link
+                    to="/tools"
+                    search={{ categoria: id }}
+                    className="group flex h-full flex-col rounded-xl border border-border/60 bg-card/50 p-4 transition-all duration-250 ease-out hover:-translate-y-0.5 hover:border-border-strong hover:bg-card"
+                  >
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="flex min-w-0 items-center gap-2">
+                        <CategoryIcon icon={meta.icon} className="size-4 shrink-0 text-primary" />
+                        <span className="truncate text-sm font-medium">{meta.label}</span>
+                      </div>
+                      <span className="shrink-0 rounded-full border border-border/60 bg-secondary/80 px-2 py-0.5 font-mono text-xs text-muted-foreground">
+                        {count}
+                      </span>
                     </div>
-                    <Badge variant="secondary" className="text-xs">
-                      {count}
-                    </Badge>
-                  </div>
-                  <p className="mt-2 line-clamp-2 text-xs leading-relaxed text-muted-foreground">
-                    {meta.summary}
-                  </p>
-                </Link>
+                    <p className="mt-2 line-clamp-2 flex-1 text-xs leading-relaxed text-muted-foreground">
+                      {meta.summary}
+                    </p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-primary opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                      Ver {count} ferramentas <ArrowUpRight className="size-3" />
+                    </span>
+                  </Link>
+                </Reveal>
               );
             })}
           </div>
         </section>
 
-        {/* Fluxos e armadilhas */}
-        <section className="mx-auto grid max-w-6xl gap-4 px-4 pb-16 sm:px-6 md:grid-cols-2">
-          <Link
-            to="/workflows"
-            className="group rounded-xl border border-border/60 bg-card/40 p-6 transition-colors hover:border-primary/40"
-          >
-            <BookOpen className="size-5 text-primary" />
-            <h3 className="mt-3 font-serif text-lg font-semibold">
-              {WORKFLOWS.length} fluxos de trabalho guiados
-            </h3>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              Documentação de função V5, tipagem de dados, propagação entre versões e mais — cada
-              etapa com as ferramentas certas linkadas.
-            </p>
-            <span className="mt-3 inline-flex items-center gap-1 text-sm text-primary">
-              Seguir um fluxo <ArrowRight className="size-3.5" />
-            </span>
-          </Link>
-          <Link
-            to="/pitfalls"
-            className="group rounded-xl border border-border/60 bg-card/40 p-6 transition-colors hover:border-primary/40"
-          >
-            <span className="inline-flex size-5 items-center justify-center rounded-full bg-primary/15 text-xs font-bold text-primary">
-              !
-            </span>
-            <h3 className="mt-3 font-serif text-lg font-semibold">
-              {PITFALLS.length} armadilhas que custam horas
-            </h3>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              Programas read-only após upgrade, pseudocódigo fictício por variante de linguagem,
-              gravações no binário errado — sintoma, causa e remédio.
-            </p>
-            <span className="mt-3 inline-flex items-center gap-1 text-sm text-primary">
-              Ver armadilhas <ArrowRight className="size-3.5" />
-            </span>
-          </Link>
+        {/* Split hero final */}
+        <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+          <Reveal>
+            <div className="overflow-hidden rounded-2xl border border-border/60 bg-card/40">
+              <div className="grid md:grid-cols-2">
+                <div className="p-7 sm:p-10">
+                  <h2 className="font-serif text-2xl font-semibold sm:text-3xl">
+                    Pronto para decompilar seu primeiro binário?
+                  </h2>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    Siga um dos {WORKFLOWS.length} fluxos guiados — documentação de função V5,
+                    tipagem de dados, propagação entre versões — ou consulte as{" "}
+                    {PITFALLS.length} armadilhas que costumam custar horas.
+                  </p>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <Button asChild className="gap-2">
+                      <Link to="/workflows">
+                        Seguir um fluxo <ArrowRight className="size-4" />
+                      </Link>
+                    </Button>
+                    <Button asChild variant="ghost" className="gap-2 text-primary hover:text-primary">
+                      <Link to="/pitfalls">
+                        <TriangleAlert className="size-4" /> Ver armadilhas
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+                <div className="border-t border-border/60 bg-surface-sunken p-7 sm:p-10 md:border-l md:border-t-0">
+                  <div className="flex items-center gap-2 text-xs font-medium text-muted-foreground">
+                    <Terminal className="size-4 text-primary" />
+                    <span>Do zero às ferramentas</span>
+                  </div>
+                  <div className="mt-4 space-y-2 font-mono text-xs leading-relaxed">
+                    <p className="text-muted-foreground">
+                      <span className="text-primary">$</span> uv run bridge-mcp-ghidra
+                    </p>
+                    <p className="text-muted-foreground">
+                      <span className="text-primary">✓</span> Instância encontrada: Ghidra 12.1.4
+                      (TCP 8089)
+                    </p>
+                    <p className="text-muted-foreground">
+                      <span className="text-primary">✓</span> 209 ferramentas registradas
+                    </p>
+                    <p className="text-muted-foreground">
+                      <span className="text-primary">→</span> Pronto para receber seu cliente de IA
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Reveal>
         </section>
       </main>
       <SiteFooter />
