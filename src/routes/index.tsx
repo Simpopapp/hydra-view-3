@@ -139,8 +139,8 @@ function HomePage() {
             <Reveal delay={120}>
               <p className="mx-auto mt-5 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
                 O Ghidra MCP expõe as capacidades do Ghidra como ferramentas MCP: decompilar,
-                renomear, tipar, documentar e emular — direto do seu cliente de IA. Este guia
-                navega tudo sem abrir o README.
+                renomear, tipar, documentar e emular — direto do seu cliente de IA. Este guia navega
+                tudo sem abrir o README.
               </p>
             </Reveal>
             <Reveal delay={180}>
@@ -220,12 +220,8 @@ function HomePage() {
                     className="group block rounded-lg border border-transparent p-3 -m-3 transition-colors hover:border-border/60 hover:bg-card/50"
                   >
                     <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-xs text-primary">
-                        0{item.step}
-                      </span>
-                      <p className="text-sm font-medium group-hover:text-primary">
-                        {item.title}
-                      </p>
+                      <span className="font-mono text-xs text-primary">0{item.step}</span>
+                      <p className="text-sm font-medium group-hover:text-primary">{item.title}</p>
                     </div>
                     <p className="mt-1 pl-7 text-xs leading-relaxed text-muted-foreground">
                       {item.detail}
@@ -301,8 +297,8 @@ function HomePage() {
                   </h2>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
                     Siga um dos {WORKFLOWS.length} fluxos guiados — documentação de função V5,
-                    tipagem de dados, propagação entre versões — ou consulte as{" "}
-                    {PITFALLS.length} armadilhas que costumam custar horas.
+                    tipagem de dados, propagação entre versões — ou consulte as {PITFALLS.length}{" "}
+                    armadilhas que costumam custar horas.
                   </p>
                   <div className="mt-6 flex flex-wrap gap-3">
                     <Button asChild className="gap-2">
@@ -310,7 +306,11 @@ function HomePage() {
                         Seguir um fluxo <ArrowRight className="size-4" />
                       </Link>
                     </Button>
-                    <Button asChild variant="ghost" className="gap-2 text-primary hover:text-primary">
+                    <Button
+                      asChild
+                      variant="ghost"
+                      className="gap-2 text-primary hover:text-primary"
+                    >
                       <Link to="/pitfalls">
                         <TriangleAlert className="size-4" /> Ver armadilhas
                       </Link>
