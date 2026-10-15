@@ -47,3 +47,4 @@
 
 Registro de progresso:
 - 2026-10-15 — PRD e roadmap criados após restauração dos gates do projeto 1. Fases P2-0…P2-6 pendentes.
+- 2026-10-15 — Remix veio sem `src/lib/` (app 500 em todas as rotas); módulos restaurados. P2-1 executada e aprovada pelo monitor (veredito: concluída). Próxima: P2-2 (Catálogo).
