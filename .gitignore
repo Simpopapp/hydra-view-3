@@ -551,3 +551,7 @@ dist-ssr/
 .wrangler/
 .dev.vars
 .opencode-healthcheck
+
+# Web UI shared modules must be tracked
+!src/lib/
+!src/lib/**
