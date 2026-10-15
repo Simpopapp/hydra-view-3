@@ -9,10 +9,10 @@ Fonte: `.opencode/project2.md` (planejamento) + `.opencode/prd-project2.md` (PRD
 - Gates: vitest (23 + novo teste de cópia), lint 0 erros, build OK, Playwright 6 rotas sem erro de console, reduced-motion verificado. ✓ (25/25 testes; avaliação do monitor: `docs/planning/reports/stage-p2-0-eval.md` — concluída)
 
 ## P2-1 — Home
-- [ ] Hero com CTA único + secundário; badge de métricas como pill
-- [ ] "Como funciona" como pipeline numerado com conectora; "4 passos" como timeline
-- [ ] Grid de famílias com cards 100% clicáveis; split hero final; reveal com stagger
-- Gates: seção 9 do PRD (vitest/lint/build) + screenshots desktop/mobile sem overflow horizontal.
+- [x] Hero com CTA único + secundário; badge de métricas como pill
+- [x] "Como funciona" como pipeline numerado com conectora; "4 passos" como timeline
+- [x] Grid de famílias com cards 100% clicáveis; split hero final; reveal com stagger
+- Gates: seção 9 do PRD (vitest/lint/build) + screenshots desktop/mobile sem overflow horizontal. ✓ (25/25 testes, lint 0 erros, build OK, Playwright 1280×1800 + 375×812 sem overflow e sem erro de console da app; avaliação do monitor: `docs/planning/reports/stage-p2-1-eval.md` — concluída)
 
 ## P2-2 — Catálogo `/tools`
 - [ ] Busca com `/` para focar, `Escape`, botão limpar, contagem com `aria-live`, destaque `<mark>`
@@ -49,3 +49,5 @@ Fonte: `.opencode/project2.md` (planejamento) + `.opencode/prd-project2.md` (PRD
 Registro de progresso:
 - 2026-10-15 — PRD e roadmap criados após restauração dos gates do projeto 1 (ver `stage-05-status.md` atualizado). Fases P2-0…P2-6 pendentes.
 - 2026-10-15 — P2-0 executada e aprovada pelo monitor (veredito: concluída). Próxima: P2-1 (Home).
+- 2026-10-15 — Remix veio sem `src/lib/` (app 500 em todas as rotas); módulos restaurados (error-capture, error-page, lovable-error-reporting, utils). OpenCode 1.19.0 reinstalado no sandbox.
+- 2026-10-15 — P2-1 executada e aprovada pelo monitor (veredito: concluída). Melhorias não-bloqueantes da avaliação (span filho de `ol`, affordance de foco nos cards) registradas para P2-6. Próxima: P2-2 (Catálogo).
