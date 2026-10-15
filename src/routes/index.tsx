@@ -117,17 +117,19 @@ function HomePage() {
           />
           <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-16 text-center sm:px-6 sm:pt-24">
             <Reveal>
-              <p className="inline-flex items-center gap-2 rounded-full border border-border/80 bg-surface-raised px-4 py-1.5 font-mono text-xs text-muted-foreground">
-                <span className="size-1.5 rounded-full bg-primary" />
-                <span>209 ferramentas</span>
+              <p className="inline-flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-border/80 bg-surface-raised px-4 py-1.5 font-mono text-xs text-muted-foreground">
+                <span className="inline-flex items-center gap-2 whitespace-nowrap">
+                  <span className="size-1.5 rounded-full bg-primary" />
+                  <span>209 ferramentas</span>
+                </span>
                 <span aria-hidden="true" className="text-border-strong">
                   ·
                 </span>
-                <span>18 categorias</span>
+                <span className="whitespace-nowrap">18 categorias</span>
                 <span aria-hidden="true" className="text-border-strong">
                   ·
                 </span>
-                <span>8 fluxos guiados</span>
+                <span className="whitespace-nowrap">8 fluxos guiados</span>
               </p>
             </Reveal>
             <Reveal delay={60}>
